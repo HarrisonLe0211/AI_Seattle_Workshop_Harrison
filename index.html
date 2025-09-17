@@ -1,134 +1,198 @@
-import React, { useMemo, useState } from "react";
-import { motion } from "framer-motion";
-import { Sparkles, Shuffle, Sun, Moon, GraduationCap, Quote } from "lucide-react";
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Harrison Le — Welcome</title>
+    <meta name="description" content="Welcome page for Harrison Le, MSCS Student at CityU" />
 
-// Single-file React component
-// TailwindCSS is available by default in this canvas.
-// Tip: Click the code and edit your facts inline.
+    <!-- Tailwind CSS (Play CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
-const ALL_FACTS = [
-  "Enjoys learning new AI/ML tools",
-  "Fan of clean, minimal UI",
-  "Loves building web demos",
-  "Keyboard-shortcut enthusiast",
-  "Always up for hackathons",
-  "Coffee > tea (most days)",
-  "Exploring cloud + serverless",
-  "Tinkers with data viz",
-  "Reads tech blogs on the bus",
-  "Experimenting with LLM apps",
-];
+    <!-- React 18 + ReactDOM 18 (UMD) -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 
-function useRandomFacts(count = 6) {
-  const [seed, setSeed] = useState(Math.random());
-  const facts = useMemo(() => {
-    const arr = [...ALL_FACTS];
-    // Fisher–Yates shuffle with seed-ish sort for consistency per seed
-    arr.sort(() => Math.sin(seed + Math.random()) - 0.5);
-    return arr.slice(0, count);
-  }, [seed, count]);
+    <!-- Framer Motion UMD -->
+    <script src="https://unpkg.com/framer-motion/dist/framer-motion.umd.js"></script>
 
-  const reshuffle = () => setSeed(Math.random());
-  return { facts, reshuffle };
-}
+    <!-- Babel in-browser compiler for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-export default function WelcomePage() {
-  const [dark, setDark] = useState(false);
-  const { facts, reshuffle } = useRandomFacts(6);
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E✨%3C/text%3E%3C/svg%3E" />
 
-  return (
-    <div className={dark ? "dark" : ""}>
-      <div className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-950 transition-colors">
-        {/* Header */}
-        <header className="container mx-auto px-6 pt-8 flex items-center justify-between">
-          <div className="inline-flex items-center gap-2 text-slate-700 dark:text-slate-200">
-            <Sparkles className="size-5" />
-            <span className="text-sm font-semibold tracking-wide">Welcome</span>
-          </div>
-          <button
-            onClick={() => setDark((d) => !d)}
-            className="inline-flex items-center gap-2 rounded-full px-3 py-1 shadow-sm ring-1 ring-slate-300/60 dark:ring-slate-700/60 bg-white/70 dark:bg-slate-900/70 backdrop-blur hover:scale-[1.02] transition"
-            title="Toggle theme"
-          >
-            {dark ? <Sun className="size-4" /> : <Moon className="size-4" />}
-            <span className="text-xs font-medium text-slate-700 dark:text-slate-200">{dark ? "Light" : "Dark"}</span>
-          </button>
-        </header>
+    <style>
+      /* Optional: smooth font rendering */
+      html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    </style>
+  </head>
+  <body class="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100 transition-colors">
+    <div id="root"></div>
 
-        {/* Hero */}
-        <main className="container mx-auto px-6 py-14">
-          <motion.section
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="mx-auto max-w-3xl text-center"
-          >
-            <div className="inline-flex items-center gap-2 rounded-full bg-white/70 dark:bg-slate-900/70 ring-1 ring-slate-300/60 dark:ring-slate-700/60 px-3 py-1 shadow-sm mb-4">
-              <GraduationCap className="size-4 text-slate-500 dark:text-slate-400" />
-              <span className="text-xs font-medium text-slate-600 dark:text-slate-300">MSCS Student at CityU</span>
-            </div>
-            <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-              Harrison Le
-            </h1>
-            <p className="mt-4 text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
-              Hi! This is my little corner of the web—simple, fast, and focused.
-              Below are a few fun facts. Click <em>Shuffle</em> to freshen them up.
-            </p>
-          </motion.section>
+    <script type="text/babel">
+      const { useMemo, useState } = React;
+      const { motion } = window.framerMotion || {};
 
-          {/* Facts Card */}
-          <motion.section
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1, duration: 0.5 }}
-            className="mx-auto mt-10 max-w-3xl"
-          >
-            <div className="rounded-2xl border border-slate-200/70 dark:border-slate-800/70 bg-white/80 dark:bg-slate-900/80 shadow-sm p-6 sm:p-8">
-              <div className="flex items-center justify-between gap-3">
-                <div className="flex items-center gap-2 text-slate-800 dark:text-slate-100">
-                  <Quote className="size-5" />
-                  <h2 className="text-lg font-semibold">Random Facts</h2>
+      const ALL_FACTS = [
+        "Enjoys learning new AI/ML tools",
+        "Fan of clean, minimal UI",
+        "Loves building web demos",
+        "Keyboard-shortcut enthusiast",
+        "Always up for hackathons",
+        "Coffee > tea (most days)",
+        "Exploring cloud + serverless",
+        "Tinkers with data viz",
+        "Reads tech blogs on the bus",
+        "Experimenting with LLM apps",
+      ];
+
+      function useRandomFacts(count = 6) {
+        const [seed, setSeed] = useState(Math.random());
+        const facts = useMemo(() => {
+          const arr = [...ALL_FACTS];
+          // Simple shuffle that changes with seed
+          for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor((Math.sin(seed + i) + 1) / 2 * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+          }
+          return arr.slice(0, count);
+        }, [seed, count]);
+        const reshuffle = () => setSeed(Math.random());
+        return { facts, reshuffle };
+      }
+
+      function SunIcon(props) {
+        return (
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+            <circle cx="12" cy="12" r="4" />
+            <path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+          </svg>
+        );
+      }
+      function MoonIcon(props) {
+        return (
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+          </svg>
+        );
+      }
+
+      function App() {
+        const [dark, setDark] = useState(false);
+        const { facts, reshuffle } = useRandomFacts(6);
+
+        React.useEffect(() => {
+          document.body.classList.toggle('dark', dark);
+          document.body.className = document.body.className.replace(
+            /bg-gradient-to-b from-[^ ]+ to-[^ ]+/,
+            ''
+          );
+          if (dark) {
+            document.body.classList.add('bg-gradient-to-b','from-slate-900','to-slate-950');
+          } else {
+            document.body.classList.add('bg-gradient-to-b','from-slate-50','to-slate-100');
+          }
+        }, [dark]);
+
+        const Container = motion ? motion.div : 'div';
+
+        return (
+          <div className="min-h-screen">
+            {/* Header */}
+            <header className="container mx-auto px-6 pt-8 flex items-center justify-between">
+              <div className="inline-flex items-center gap-2 text-slate-700 dark:text-slate-200">
+                <span className="text-lg">✨</span>
+                <span className="text-sm font-semibold tracking-wide">Welcome</span>
+              </div>
+              <button
+                onClick={() => setDark(d => !d)}
+                className="inline-flex items-center gap-2 rounded-full px-3 py-1 shadow-sm ring-1 ring-slate-300/60 dark:ring-slate-700/60 bg-white/70 dark:bg-slate-900/70 backdrop-blur hover:scale-[1.02] transition text-slate-700 dark:text-slate-200"
+                title="Toggle theme"
+              >
+                {dark ? <SunIcon className="w-4 h-4"/> : <MoonIcon className="w-4 h-4"/>}
+                <span className="text-xs font-medium">{dark ? 'Light' : 'Dark'}</span>
+              </button>
+            </header>
+
+            {/* Hero */}
+            <main className="container mx-auto px-6 py-14">
+              <Container
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="mx-auto max-w-3xl text-center"
+              >
+                <div className="inline-flex items-center gap-2 rounded-full bg-white/70 dark:bg-slate-900/70 ring-1 ring-slate-300/60 dark:ring-slate-700/60 px-3 py-1 shadow-sm mb-4">
+                  <span className="text-slate-500 dark:text-slate-400">🎓</span>
+                  <span className="text-xs font-medium text-slate-600 dark:text-slate-300">MSCS Student at CityU</span>
                 </div>
-                <button
-                  onClick={reshuffle}
-                  className="inline-flex items-center gap-2 rounded-xl px-3 py-1.5 text-sm font-medium shadow ring-1 ring-slate-300/70 dark:ring-slate-700/70 bg-slate-50 hover:bg-slate-100 dark:bg-slate-800 hover:dark:bg-slate-700 transition"
-                >
-                  <Shuffle className="size-4" />
-                  Shuffle
-                </button>
-              </div>
+                <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+                  Harrison Le
+                </h1>
+                <p className="mt-4 text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
+                  Hi! This is my little corner of the web—simple, fast, and focused.
+                  Below are a few fun facts. Click <em>Shuffle</em> to freshen them up.
+                </p>
+              </Container>
 
-              <ul className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {facts.map((fact, i) => (
-                  <motion.li
-                    key={`${fact}-${i}`}
-                    initial={{ opacity: 0, y: 6 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.25, delay: 0.02 * i }}
-                    className="rounded-xl bg-slate-50/80 dark:bg-slate-800/70 ring-1 ring-slate-200/70 dark:ring-slate-700/60 px-4 py-3 text-sm text-slate-700 dark:text-slate-200"
-                  >
-                    • {fact}
-                  </motion.li>
-                ))}
-              </ul>
+              {/* Facts Card */}
+              <Container
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1, duration: 0.5 }}
+                className="mx-auto mt-10 max-w-3xl"
+              >
+                <div className="rounded-2xl border border-slate-200/70 dark:border-slate-800/70 bg-white/80 dark:bg-slate-900/80 shadow-sm p-6 sm:p-8">
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-2 text-slate-800 dark:text-slate-100">
+                      <span className="text-lg">💡</span>
+                      <h2 className="text-lg font-semibold">Random Facts</h2>
+                    </div>
+                    <button
+                      onClick={reshuffle}
+                      className="inline-flex items-center gap-2 rounded-xl px-3 py-1.5 text-sm font-medium shadow ring-1 ring-slate-300/70 dark:ring-slate-700/70 bg-slate-50 hover:bg-slate-100 dark:bg-slate-800 hover:dark:bg-slate-700 transition"
+                    >
+                      <span>🔀</span>
+                      Shuffle
+                    </button>
+                  </div>
 
-              <div className="mt-6 text-xs text-slate-500 dark:text-slate-400">
-                Tip: Edit the <code>ALL_FACTS</code> array in this file to personalize these.
-              </div>
-            </div>
-          </motion.section>
+                  <ul className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {facts.map((fact, i) => (
+                      <Container
+                        key={`${fact}-${i}`}
+                        initial={{ opacity: 0, y: 6 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.25, delay: 0.02 * i }}
+                        className="rounded-xl bg-slate-50/80 dark:bg-slate-800/70 ring-1 ring-slate-200/70 dark:ring-slate-700/60 px-4 py-3 text-sm text-slate-700 dark:text-slate-200"
+                      >
+                        • {fact}
+                      </Container>
+                    ))}
+                  </ul>
 
-          {/* Footer */}
-          <motion.footer
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.6 }}
-            className="mx-auto max-w-3xl text-center text-xs text-slate-500 dark:text-slate-400 mt-10"
-          >
-            Built with React + Tailwind + Framer Motion.
-          </motion.footer>
-        </main>
-      </div>
-    </div>
-  );
-}
+                  <div className="mt-6 text-xs text-slate-500 dark:text-slate-400">
+                    Tip: Edit the <code>ALL_FACTS</code> array in this file to personalize these.
+                  </div>
+                </div>
+              </Container>
+
+              {/* Footer */}
+              <Container
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.2, duration: 0.6 }}
+                className="mx-auto max-w-3xl text-center text-xs text-slate-500 dark:text-slate-400 mt-10"
+              >
+                Built with React + Tailwind + Framer Motion. Hosted on GitHub Pages.
+              </Container>
+            </main>
+          </div>
+        );
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(<App />);
+    </script>
+  </body>
+</html>
